@@ -1,0 +1,10 @@
+.env
+__pycache__/
+*.pyc
+data/raw/
+data/generated/
+*.csv
+*.parquet
+.DS_Store
+cheatsheet.md
+.venv
