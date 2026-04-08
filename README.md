@@ -6,7 +6,7 @@
 
 A full end-to-end data engineering and analytics project built around a realistic simulation of telecom network operations data, set in Oulu, Finland. The goal is to cover every layer of a modern data stack: ingestion, storage, transformation, warehousing, orchestration, containerization, and visualization.
 
-The dataset is synthetic but grounded in real open data sources. Every dimension, tower locations, weather, geography, customer behavior, signal metrics, is anchored to something that actually exists. Nothing is fabricated without a real-world reference.
+The dataset is synthetic but grounded in real open data sources. Every dimension, tower locations, weather, geography, customer behavior, signal metrics, is anchored to something that actually exists.
 
 ---
 
@@ -16,7 +16,7 @@ Oulu is home to significant telecom R&D activity, particularly around 5G and 6G 
 
 Cell towers placed at real GPS coordinates across Finnish regions. Signal quality metrics reported per tower every few minutes. Customer connections, data usage, handover events. Network incidents, outages, maintenance tickets, degraded service windows. Spectrum band allocation per tower. Weather data from Oulu that correlates with signal drops in winter, because Finnish winters are harsh and that shows up in the numbers.
 
-This is not a generic churn dataset. It is a RAN operations dataset with a Finnish identity, and that specificity is the point.
+This is a RAN operations dataset with a Finnish identity, and that specificity is the point.
 
 ---
 
@@ -24,14 +24,14 @@ This is not a generic churn dataset. It is a RAN operations dataset with a Finni
 
 Each source contributes statistical truth to one dimension of the synthetic dataset.
 
-| Source                                                 | What It Provides                                                                                  | URL                               |
-| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------- | --------------------------------- |
-| Traficom (Finnish Transport and Communications Agency) | Real Finnish cell tower GPS coordinates, operator, frequency band, mast height                    | traficom.fi/en/open-data          |
-| OpenCelliD                                             | Crowdsourced global tower database: tower IDs, coordinates, signal range, technology type (4G/5G) | opencellid.org                    |
-| FMI (Finnish Meteorological Institute)                 | Historical weather data for Oulu: temperature, snow, wind, for seasonal signal correlation        | en.ilmatieteenlaitos.fi/open-data |
-| Statistics Finland                                     | Population density, municipality boundaries, urban/rural classification across Finnish regions    | stat.fi/en                        |
-| IBM Watson Telco Churn Dataset (Kaggle)                | Customer behavioral distributions: contract types, usage levels, churn rates                      | kaggle.com                        |
-| Telecom KPI datasets (Kaggle/GitHub)                   | Real signal metric ranges: RSRP, SINR, throughput, latency, handover frequency                    | kaggle.com                        |
+| Source                                                 | What It Provides                                                                                   | URL                               |
+| ------------------------------------------------------ | -------------------------------------------------------------------------------------------------- | --------------------------------- |
+| Traficom (Finnish Transport and Communications Agency) | Real Finnish cell tower GPS coordinates, operator, frequency band, mast height                     | traficom.fi/en/open-data          |
+| OpenCelliD                                             | Crowdsourced global tower database: tower IDs, coordinates, signal range, technology type (4G/5G)  | opencellid.org                    |
+| FMI (Finnish Meteorological Institute)                 | Historical weather data for Oulu: temperature, snow, and wind data for seasonal signal correlation | en.ilmatieteenlaitos.fi/open-data |
+| Statistics Finland                                     | Population density, municipality boundaries, urban/rural classification across Finnish regions     | stat.fi/en                        |
+| IBM Watson Telco Churn Dataset (Kaggle)                | Customer behavioral distributions: contract types, usage levels, churn rates                       | kaggle.com                        |
+| Telecom KPI datasets (Kaggle/GitHub)                   | Real signal metric ranges: RSRP, SINR, throughput, latency, handover frequency                     | kaggle.com                        |
 
 The generation layer reads distributions from these sources and uses them as constraints when producing millions of synthetic rows.
 
@@ -233,21 +233,50 @@ northsignal/
 
 ---
 
+## Branch Structure
+
+Development is split into five phases. Each phase has its own branch and gets merged into main when complete.
+
+```
+main
+├── phase/01-data-sources       fetch and explore all real-world data sources
+├── phase/02-generator          build the synthetic dataset generator
+├── phase/03-local-pipeline     Kafka, Airflow, PostgreSQL, PySpark running locally
+├── phase/04-cloud-deployment   Azure Data Lake, Databricks, Synapse, AKS
+└── phase/05-visualization      Power BI, tower map, Grafana
+```
+
+---
+
 ## Status
+
+`phase/01-data-sources`
 
 - [ ] Fetch and explore Traficom tower data
 - [ ] Fetch and explore OpenCelliD data for Finland
 - [ ] Set up FMI API access and pull Oulu weather history
+
+`phase/02-generator`
+
 - [ ] Design final star schema in detail
 - [ ] Build dataset generator (Phase 1: towers and geography)
 - [ ] Build dataset generator (Phase 2: network events and KPIs)
 - [ ] Build dataset generator (Phase 3: customers and incidents)
+
+`phase/03-local-pipeline`
+
 - [ ] Set up Kafka locally in Docker
 - [ ] Set up Airflow locally in Docker
 - [ ] Set up local PostgreSQL and load star schema
 - [ ] Write PySpark transformation jobs
+
+`phase/04-cloud-deployment`
+
 - [ ] Deploy to Azure (Data Lake, Databricks, Synapse)
 - [ ] Deploy Kafka and Airflow to Kubernetes (AKS)
+
+`phase/05-visualization`
+
 - [ ] Build Power BI model and DAX measures
 - [ ] Build tower map visualization
 - [ ] Set up Grafana monitoring
