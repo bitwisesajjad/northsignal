@@ -61,6 +61,7 @@ for year in [2022, 2023, 2024, 2025]:
     weeks.extend(generate_weekly_ranges(year))
 
 for start, end in weeks:
+    # print the beginning and end of the week 
     print(f"Fetching {start[:10]} to {end[:10]}...")
     rows = fetch_week(start, end)
     all_observations.extend(rows)
@@ -71,6 +72,7 @@ df = df.rename(columns={
     "snow_aws": "snow_depth_cm",
     "ws_10min": "wind_speed_ms"
 })
+# make sure pandas hasn't added anything extra
 df = df[["time", "temperature_c", "snow_depth_cm", "wind_speed_ms"]]
 df = df.sort_values("time").reset_index(drop=True)
 
