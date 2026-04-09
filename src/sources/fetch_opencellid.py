@@ -1,7 +1,6 @@
 import os
 from dotenv import load_dotenv
 import requests
-import pandas as pd
 
 load_dotenv ()
 api_key = os.getenv ("OPENCELLID_API_KEY")
@@ -18,10 +17,3 @@ with open(output_path, "wb") as f:
         f.write(chunk)
 
 print(f"Saved to {output_path}")
-
-print (" extracting Finland's towers ... ")
-
-df = pd.read_csv ("data/raw/opencellid_towers.gz")
-df = df [df ["mcc"] == 244]
-df.to_csv ("data/raw/finland.csv")
-print (len(df))
