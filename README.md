@@ -228,6 +228,7 @@ northsignal/
 ├── docs/
 │   ├── architecture.png      architecture diagram
 │   └── data_dictionary.md    field-by-field description of all tables
+├── run_all.py                creating synthetic data using generator scripts
 └── README.md
 ```
 
@@ -252,16 +253,16 @@ main
 
 `phase/01-data-sources`
 
-- [ ] Fetch and explore Traficom tower data
-- [ ] Fetch and explore OpenCelliD data for Finland
-- [ ] Set up FMI API access and pull Oulu weather history
+- [x] Fetch and explore Traficom tower data
+- [x] Fetch and explore OpenCelliD data for Finland
+- [x] Set up FMI API access and pull Oulu weather history
 
 `phase/02-generator`
 
-- [ ] Design final star schema in detail
-- [ ] Build dataset generator (Phase 1: towers and geography)
-- [ ] Build dataset generator (Phase 2: network events and KPIs)
-- [ ] Build dataset generator (Phase 3: customers and incidents)
+- [x] Design final star schema in detail
+- [x] Build dataset generator (Phase 1: towers and geography)
+- [x] Build dataset generator (Phase 2: network events and KPIs)
+- [x] Build dataset generator (Phase 3: customers and incidents)
 
 `phase/03-local-pipeline`
 
